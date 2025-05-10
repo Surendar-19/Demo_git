@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Orugallu Kunda Chicken</title>
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #fff6e6;
+            color: #4b3b2b;
+            overflow-x: hidden;
+        }
+
+        /* Welcome Page */
+        #welcome {
+            height: 100vh;
+            background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+            padding: 0 20px;
+            position: relative;
+        }
+
+        #welcome h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            animation: fadeInDown 1s ease forwards;
+        }
+
+        #welcome p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        #enterMenu {
+            font-weight: 700;
+            font-size: 1.25rem;
+            padding: 12px 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            background: #d95a29;
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            animation: bounce 2s infinite;
+        }
+        #enterMenu:hover {
+            background: #f57c43;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Menu Page */
+        #menu {
+            padding: 20px 15px 60px 15px;
+            max-width: 950px;
+            margin: 0 auto;
+        }
+        #menu h2 {
+            color: #d95a29;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+        #search {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 30px;
+            border: 2px solid #d95a29;
+            padding: 10px 20px;
+            font-size: 1rem;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            background: #fff1de;
+            border-radius: 15px;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            box-shadow: 5px 5px 12px rgba(0,0,0,0.1);
+        }
+        .menu-item img {
+            height: 60px;
+            width: 60px;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 0 8px rgba(217, 90, 41, 0.5);
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .menu-desc {
+            flex-grow: 1;
+        }
+        .menu-desc span {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .price-selectors {
+            margin-left: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        .price-selectors select {
+            margin-bottom: 5px;
+            border-radius: 15px;
+            border: 2px solid #d95a29;
+            padding: 6px 10px;
+            cursor: pointer;
+            color: #4b3b2b;
+            font-weight: 600;
+            transition: box-shadow 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            background-color: #fff;
+            border-color: #d95a29;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .price-selectors select:focus,
+        .price-selectors select:hover {
+            outline: none;
+            box-shadow: 0 0 8px #d95a29;
+            border-color: #d95a29;
+        }
+
+        .add-btn {
+            background-color: #d95a29;
+            border: none;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left: 15px;
+            flex-shrink: 0;
+            align-self: center;
+        }
+        .add-btn:hover {
+            background-color: #f57c43;
+        }
+
+        #orderSummary {
+            background: #fff1de;
+            border-radius: 15px;
+            padding: 15px 20px;
+            margin-top: 30px;
+            box-shadow: 5px 5px 15px rgba(217, 90, 41, 0.3);
+        }
+        #orderSummary h4 {
+            font-weight: 700;
+            color: #d95a29;
+            margin-bottom: 10px;
+        }
+        #orderList {
+            list-style: none;
+            padding-left: 0;
+            max-height: 220px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+        #orderList li {
+            padding: 8px 10px;
+            border-bottom: 1px solid #d95a29;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            color: #4b3b2b;
+        }
+        #orderList li:last-child{
+             border-bottom: none;
+        }
+        #totalPrice {
+            font-size: 1.3rem;
+            color: #d95a29;
+        }
+        #placeOrder {
+            width: 100%;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 12px 0;
+            border-radius: 30px;
+            background-color: #d95a29;
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #placeOrder:hover {
+            background-color: #f57c43;
+        }
+
+        /* Payment Modal Styles */
+        #paymentModal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        #paymentModalContent {
+            background: #fff1de;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #paymentModalClose {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        #paymentModalClose:hover,
+        #paymentModalClose:focus {
+            color: #000;
+            text-decoration: none;
+        }
+
+        #paymentForm {
+            margin-top: 20px;
+        }
+
+        #paymentForm label {
+            display: block;
+            margin-bottom: 5px;
+            color: #4b3b2b;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        #paymentForm input[type="text"],
+        #paymentForm input[type="email"],
+        #paymentForm input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d95a29;
+            border-radius: 25px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #paymentForm input[type="text"]:focus,
+        #paymentForm input[type="email"]:focus,
+        #paymentForm input[type="tel"]:focus {
+            outline: none;
+            border-color: #f57c43;
+            box-shadow: 0 0 5px rgba(217, 90, 41, 0.3);
+        }
+
+        #paymentForm button {
+            background-color: #d95a29;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #paymentForm button:hover {
+            background-color: #f57c43;
+        }
+
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        .order-summary-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff1de;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            width: 90%;
+            max-width: 500px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .order-summary-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .order-summary-modal h2 {
+            color: #d95a29;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        .order-summary-modal ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1.5rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .order-summary-modal li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #d95a29;
+            color: #4b3b2b;
+            font-weight: 600;
+        }
+
+        .order-summary-modal li:last-child {
+            border-bottom: none;
+        }
+
+        .order-summary-modal .total {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #d95a29;
+            margin-top: 1rem;
+            text-align: right;
+        }
+
+        .order-summary-modal .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .order-summary-modal .close-button:hover {
+            color: #d95a29;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="welcome" class="text-center">
+        <h1>Welcome to Orugallu Kunda Chicken</h1>
+        <p>Experience the authentic flavors of Telangana special foods!</p>
+        <button id="enterMenu" aria-label="Enter Menu">Enter Menu</button>
+    </div>
+
+    <div id="menu" class="d-none">
+        <div class="container">
+            <h2>Menu</h2>
+            <input
+                type="search"
+                id="search"
+                placeholder="Search for your favorite food..."
+                aria-label="Search Menu"
+            />
+            <div id="menuItems" class="mt-3"></div>
+
+            <div id="orderSummary" class="mt-4" aria-live="polite" aria-atomic="true">
+                <h4>Order Summary</h4>
+                <ul id="orderList"></ul>
+                <div class="d-flex justify-content-between align-items-center font-weight-bold mb-3">
+                    <span>Total:</span> <span>₹<span id="totalPrice">0</span></span>
+                </div>
+                <button id="placeOrder" disabled aria-disabled="true">Place Order</button>
+                <div id="orderStatus" class="mt-3 font-italic" aria-live="assertive"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="paymentModal">
+        <div id="paymentModalContent">
+            <span id="paymentModalClose" aria-label="Close">×</span>
+            <h2>Payment Details</h2>
+            <form id="paymentForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required aria-label="Name">
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required aria-label="Email">
+
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" required aria-label="Phone Number">
+
+                <label for="cardNumber">Card Number:</label>
+                <input type="text" id="cardNumber" name="cardNumber" required aria-label="Card Number">
+
+                <label for="expiryDate">Expiry Date:</label>
+                <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" required aria-label="Expiry Date">
+
+                <label for="cvv">CVV:</label>
+                <input type="text" id="cvv" name="cvv" required aria-label="CVV">
+
+                <button type="submit">Pay Now</button>
+            </form>
+            <div id="paymentMessage" class="mt-3 text-center font-weight-bold"></div>
+        </div>
+    </div>
+    <div class="order-summary-modal" id="orderSummaryModal">
+        <h2 class="order-summary-title">Order Summary</h2>
+        <ul class="order-summary-list">
+        </ul>
+        <p class="order-summary-total">Total: ₹<span id="orderModalTotalPrice">0</span></p>
+        <button class="close-button" id="closeOrderModal">&times;</button>
+    </div>
+
+    <script>
+        const menuItems = [
+            {
+                name: "Hyderabadi Biryani",
+                price: { single: 250, full: 700, special: 1000 },
+
+            },
+            {
+                name: "Bagara Baingan",
+                price: { single: 120, full: 320, special: 520 },
+
+            },
+            {
+                name: "Dum Ka Murgh",
+                price: { single: 160, full: 420, special: 680 },
+
+            },
+            {
+                name: "Mirchi Bajji",
+                price: { single: 80, full: 200, special: 300 },
+
+            },
+            {
+                name: "Mutton Pulusu",
+                price: { single: 210, full: 580, special: 900 },
+
+            },
+            {
+                name: "Natu Kodi Pulusu",
+                price: { single: 180, full: 460, special: 750 },
+
+            },
+            {
+                name: "Sarvapindi",
+                price: { single: 90, full: 220, special: 350 },
+
+            },
+            {
+                name: "Puri with Chicken Pulusu",
+                price: { single: 190, full: 480, special: 780 },
+
+            },
+            {
+                name: "Haleem",
+                price: { single: 220, full: 600, special: 950 },
+
+            },
+            {
+                name: "Double Ka Meetha",
+                price: { single: 110, full: 260, special: 400 },
+
+            },
+            {
+                name: "Qubani Ka Meetha",
+                price: { single: 90, full: 230, special: 370 },
+
+            },
+            {
+                name: "Pathar Ka Gosht",
+                price: { single: 210, full: 580, special: 900 },
+
+            },
+        ];
+
+        const welcomeElem = document.getElementById("welcome");
+        const menuElem = document.getElementById("menu");
+        const menuItemsElem = document.getElementById("menuItems");
+        const orderListElem = document.getElementById("orderList");
+        const totalPriceElem = document.getElementById("totalPrice");
+        const placeOrderBtn = document.getElementById("placeOrder");
+        const orderStatusElem = document.getElementById("orderStatus");
+        const searchInput = document.getElementById("search");
+        const paymentModal = document.getElementById("paymentModal");
+        const paymentModalClose = document.getElementById("paymentModalClose");
+        const paymentForm = document.getElementById("paymentForm");
+        const paymentMessage = document.getElementById("paymentMessage");
+        const orderSummaryModal = document.getElementById("orderSummaryModal");
+        const orderSummaryList = document.querySelector(".order-summary-list");
+        const orderModalTotalPriceElem = document.getElementById("orderModalTotalPrice");
+        const closeOrderModalBtn = document.getElementById("closeOrderModal");
+
+        let order = [];
+        let totalPrice = 0;
+        let orderTotal = 0;
+
+        document.getElementById("enterMenu").addEventListener("click", () => {
+            welcomeElem.classList.add("d-none");
+            menuElem.classList.remove("d-none");
+            renderMenu(menuItems);
+            updateOrderUI();
+        });
+
+        searchInput.addEventListener("input", () => {
+            const query = searchInput.value.trim().toLowerCase();
+            const filtered = menuItems.filter((item) =>
+                item.name.toLowerCase().includes(query)
+            );
+            renderMenu(filtered);
+        });
+
+        function renderMenu(items) {
+            menuItemsElem.innerHTML = "";
+            if (items.length === 0) {
+                menuItemsElem.innerHTML =
+                    '<p class="text-center font-italic text-muted">No items found.</p>';
+                return;
+            }
+            items.forEach((item) => {
+                const div = document.createElement("div");
+                div.className = "menu-item";
+
+                const select = document.createElement("select");
+                select.className = "price-selectors";
+                select.setAttribute("aria-label", `Select size for ${item.name}`);
+                select.innerHTML = `
+                    <option value="single" selected>Single - ₹${item.price.single}</option>
+                    <option value="full">Full - ₹${item.price.full}</option>
+                    <option value="special">Special - ₹${item.price.special}</option>
+                `;
+
+                const addBtn = document.createElement("button");
+                addBtn.className = "add-btn";
+                addBtn.textContent = "Add to Order";
+                addBtn.setAttribute("aria-label", `Add ${item.name} to order`);
+                addBtn.onclick = () => {
+                    addToOrder(item, select.value);
+                };
+
+                div.innerHTML = `
+
+                    <div class="menu-desc">
+                        <span>${item.name}</span>
+                    </div>`;
+                div.appendChild(select);
+                div.appendChild(addBtn);
+                menuItemsElem.appendChild(div);
+            });
+        }
+
+        function addToOrder(item, size) {
+            const price = item.price[size];
+            const orderItem = {
+                name: item.name,
+                size: size,
+                price: price,
+            };
+            order.push(orderItem);
+            totalPrice += price;
+            updateOrderUI();
+            orderStatusElem.textContent = "";
+        }
+
+        function updateOrderUI() {
+            orderListElem.innerHTML = "";
+            order.forEach((item) => {
+                const li = document.createElement("li");
+                li.textContent = `${item.name} (${capitalize(item.size)})`;
+                const spanPrice = document.createElement("span");
+                spanPrice.textContent = `₹${item.price.toFixed(2)}`;
+                li.appendChild(spanPrice);
+                orderListElem.appendChild(li);
+            });
+            totalPriceElem.textContent = totalPrice.toFixed(2);
+            if (order.length === 0) {
+                placeOrderBtn.disabled = true;
+                placeOrderBtn.setAttribute("aria-disabled", "true");
+            } else {
+                placeOrderBtn.disabled = false;
+                placeOrderBtn.removeAttribute("aria-disabled");
+            }
+        }
+
+        placeOrderBtn.addEventListener("click", () => {
+            if (order.length === 0) return;
+            orderTotal = totalPrice;
+            populateOrderSummaryModal();
+            showOrderSummaryModal();
+            //showPaymentModal(); Commented out to show order summary first
+        });
+
+        paymentModalClose.addEventListener("click", () => {
+            paymentModal.style.display = "none";
+        });
+
+        window.addEventListener("click", (event) => {
+            if (event.target === paymentModal) {
+                paymentModal.style.display = "none";
+            }
+        });
+
+        paymentForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+            const cardNumber = document.getElementById("cardNumber").value;
+            const expiryDate = document.getElementById("expiryDate").value;
+            const cvv = document.getElementById("cvv").value;
+
+            const errors = validatePaymentForm(name, email, phone, cardNumber, expiryDate, cvv);
+            if (errors.length > 0) {
+                paymentMessage.innerHTML = errors.join("<br>");
+                paymentMessage.style.color = "red";
+                return;
+            }
+
+            paymentMessage.innerHTML = "Payment successful! Thank you for your order.";
+            paymentMessage.style.color = "green";
+            setTimeout(() => {
+                paymentModal.style.display = "none";
+                resetOrder();
+            }, 2000);
+
+        });
+
+        function validatePaymentForm(name, email, phone, cardNumber, expiryDate, cvv) {
+            const errors = [];
+            if (!name) errors.push("Name is required.");
+            if (!email || !validateEmail(email)) errors.push("Valid email is required.");
+            if (!phone || !validatePhone(phone)) errors.push("Valid phone number is required.");
+            if (!cardNumber || !validateCardNumber(cardNumber)) errors.push("Valid card number is required.");
+            if (!expiryDate || !validateExpiryDate(expiryDate)) errors.push("Valid expiry date is required.");
+            if (!cvv || !validateCVV(cvv)) errors.push("Valid CVV is required.");
+            return errors;
+        }
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        function validatePhone(phone) {
+            const re = /^[6-9]\d{9}$/;
+            return re.test(phone);
+        }
+
+        function validateCardNumber(cardNumber) {
+           const re = /^\d{16}$/;
+           return re.test(cardNumber);
+        }
+
+       function validateExpiryDate(expiryDate) {
+            const re = /^(0[1-9]|1[0-2])\/?([0-9]{2})$/;
+            if (!re.test(expiryDate)) return false;
+
+            const [month, year] = expiryDate.split('/').map(Number);
+            const currentYear = new Date().getFullYear() % 100;
+            const currentMonth = new Date().getMonth() + 1;
+
+            if (year < currentYear || (year === currentYear && month < currentMonth)) {
+                return false;
+            }
+            return true;
+       }
+
+        function validateCVV(cvv) {
+            const re = /^\d{3,4}$/;
+            return re.test(cvv);
+        }
+
+        function resetOrder() {
+            order = [];
+            totalPrice = 0;
+            orderTotal = 0;
+            orderListElem.innerHTML = "";
+            totalPriceElem.textContent = "0";
+            placeOrderBtn.disabled = true;
+            placeOrderBtn.setAttribute("aria-disabled", "true");
+            orderStatusElem.textContent = "";
+            searchInput.value = "";
+            renderMenu(menuItems);
+        }
+
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+        //Order Summary Modal
+        function populateOrderSummaryModal() {
+            orderSummaryList.innerHTML = "";
+            order.forEach(item => {
+                const li = document.createElement("li");
+                li.innerHTML = `<span>${item.name} (${capitalize(item.size)})</span><span>₹${item.price.toFixed(2)}</span>`;
+                orderSummaryList.appendChild(li);
+            });
+            orderModalTotalPriceElem.textContent = orderTotal.toFixed(2);
+        }
+
+        function showOrderSummaryModal() {
+            orderSummaryModal.classList.add("show");
+            document.body.style.overflow = "hidden";
+        }
+
+
+        function hideOrderSummaryModal() {
+            orderSummaryModal.classList.remove("show");
+            document.body.style.overflow = "";
+        }
+
+        closeOrderModalBtn.addEventListener("click", () => {
+            hideOrderSummaryModal();
+            showPaymentModal(); // Show payment modal after closing order summary
+        });
+
+        function showPaymentModal() {
+             paymentModal.style.display = "block";
+        }
+
+    </script>
+</body>
+</html>
